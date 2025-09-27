@@ -2,7 +2,7 @@ import spacy
 import pandas as pd
 import streamlit as st
 from spacy import displacy
-from gtts import gTTS   # ✅ correct import
+from gtts import gTTS
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table
 from reportlab.lib.styles import getSampleStyleSheet
 import os
@@ -29,6 +29,20 @@ except OSError:
     from spacy.cli import download
     download("en_core_web_md")
     nlp = spacy.load("en_core_web_md")
+
+# -----------------------------
+# Add Custom Entity Ruler
+# -----------------------------
+from spacy.pipeline import EntityRuler
+
+ruler = nlp.add_pipe("entity_ruler", before="ner")
+patterns = [
+    {"label": "PRODUCT", "pattern": "iPhone 15"},
+    {"label": "PRODUCT", "pattern": "Galaxy S24"},
+    {"label": "PRODUCT", "pattern": "MacBook Pro"},
+    {"label": "PRODUCT", "pattern": "PlayStation 5"},
+]
+ruler.add_patterns(patterns)
 
 # -----------------------------
 # Functions
@@ -65,9 +79,9 @@ def save_pdf(entities, query, filename="entities.pdf"):
 # -----------------------------
 # Streamlit UI
 # -----------------------------
-st.title("🔎 Universal Named Entity Recognition (NER) with Text-to-Speech")
+st.title("📘 Named Entity Recognition (NER) with Text-to-Speech")
 
-query = st.text_area("✍️ Enter your text:", st.session_state["query"])
+query = st.text_area("✍️ Enter your text here:", st.session_state["query"])
 
 if st.button("Extract Entities"):
     if query.strip():
@@ -98,14 +112,6 @@ if st.button("Extract Entities"):
     else:
         st.error("Please enter some text.")
 
-# -----------------------------
-# Buttons to clear query/results/all
-# -----------------------------
-
-    if st.button("🗑️ Remove All"):
-        st.session_state["query"] = ""
-        st.session_state["entities"] = []
-        st.reru
 
 
 
