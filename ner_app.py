@@ -6,6 +6,7 @@ from gtts import gTTS
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table
 from reportlab.lib.styles import getSampleStyleSheet
 import os
+import subprocess  # <-- Add this
 
 # -----------------------------
 # Page Config (must be first)
@@ -26,8 +27,7 @@ if "entities" not in st.session_state:
 try:
     nlp = spacy.load("en_core_web_md")
 except OSError:
-    from spacy.cli import download
-    download("en_core_web_md")
+    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_md"])
     nlp = spacy.load("en_core_web_md")
 
 # -----------------------------
@@ -111,6 +111,13 @@ if st.button("Extract Entities"):
             st.warning("⚠️ No entities found.")
     else:
         st.error("Please enter some text.")
+
+
+
+
+
+
+
 
 
 
