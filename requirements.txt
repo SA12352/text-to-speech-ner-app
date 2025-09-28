@@ -3,7 +3,7 @@ spacy
 gtts
 pandas
 reportlab
-en-core-web-md @ https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1.tar.gz
+
 
 
 
