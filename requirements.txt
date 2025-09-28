@@ -1,8 +1,9 @@
-streamlit
-spacy
-gtts
-pandas
-reportlab
+streamlit==1.38.0
+spacy==3.7.2
+en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.0/en_core_web_sm-3.7.0-py3-none-any.whl
+gTTS==2.5.1
+pandas==2.2.2
+
 
 
 
